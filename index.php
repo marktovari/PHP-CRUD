@@ -4,6 +4,7 @@
 	<?php include('templates/header.php'); ?>
 
 	<?php include('results.php'); ?>
+	<?php include('form.php'); ?>
 
 	<?php include('templates/footer.php'); ?>
 
