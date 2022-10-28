@@ -15,6 +15,10 @@
 	$email = $_POST['email-formData'];
 	$phone = $_POST['phone-formData'];
 
+	$pictureFilename = 		$_FILES['image-formData']['name'];
+	$pictureSize = 			$_FILES['image-formData']['size'];
+	$pictureError = 		$_FILES['image-formData']['error'];
+	$pictureTemporaryName = $_FILES['image-formData']['tmp_name'];
 
 	//Function to prepare input
 	function inputPrepare($input) {
@@ -50,23 +54,41 @@
 		}
     }
 
+	//Image Validation
+	if ($pictureError != 0) { //Use the built-in error functionality of the PHP $_FILE global
+        $errors["image-arrayKey"] = "Error with picture: {$pictureError}";
+    } else if ($pictureSize > 140000) {
+		$errors["image-arrayKey"] = "Image bigger than recommended";
+    } else {
+		//If there are no errors begin the uploading of the file itself
+		//First separate the extension from the filename and check if they are really pictures
+		$pictureExtension = pathinfo($pictureFilename, PATHINFO_EXTENSION);
+		$pictureExtension= strtolower($pictureExtension);
+		$acceptedExtensions = ["jpg", "jpeg", "png"];
+
+		if (in_array($pictureExtension, $acceptedExtensions)) {
+			$pictureFilename = uniqid("IMG-", true).'.'.$pictureExtension; //Give it a new name, with the extension it had
+			$uploadPath = 'images/'.$pictureFilename;
+			move_uploaded_file($pictureTemporaryName, $uploadPath); //Move the file into the upload path
+		}
+	}
+
 	//Checking if there is no errors at all
 	foreach ($errors as $key => $value) {
 		if ($value == '') {
 			$uploadReady = true;
-		}
-		 else {
+		} else {
 			$uploadReady = false;
 			break;
 		}
 	}
 
 //DATABASE UPLOAD
-	// $uploadReady = true;
+	$uploadReady = true;
 	if ($uploadReady) {
 		// SQL command to add the data. Note the backticks, and don't mix them up with the single quotations
 		// phpMyAdmin can generate code too
-		$sql = "INSERT INTO `test-table` (`name`, `email`, `phone`) VALUES ('$name', '$email', '$phone');";
+		$sql = "INSERT INTO `test-table` (`name`, `email`, `phone`, `image-url`) VALUES ('$name', '$email', '$phone', '$pictureFilename');";
 
 		// Apply the SQL Command
 		$sendData = mysqli_query($connection, $sql);
@@ -76,7 +98,7 @@
 ?>
 
 <section class="">
-	<form class="" action="index.php" method="POST">
+	<form class="" action="index.php" method="POST" enctype="multipart/form-data">
 
 		<label>Name</label>
 		<!-- We echo out the $uploadData[$key], so when the user clicks the submit button, the data doesn't disappear -->
@@ -92,6 +114,9 @@
 		<label>Phone</label>
 		<input type="text" name="phone-formData" value="">
 		<div class="red-text"><?php echo $errors['phone-arrayKey']; ?></div>
+		<!-- Image Upload -->
+		<label>Image</label>
+		<input type="file" name="image-formData">
 
 		<input type="submit" name="submit" value="Submit" class="">
 		<!-- Once this button is pressed, all the $uploadData['arrayKey'] turns into a POST request. Which is an associative array.-->

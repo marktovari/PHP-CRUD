@@ -6,7 +6,7 @@
 	require_once(__ROOT__.'\dbConnect.php'); //Delete this and use the line above in actual application
 
 	//Write Queries in SQL and put it in a string
-	$queryParmeter =  "SELECT * FROM `testtable`;";
+	$queryParmeter =  "SELECT * FROM `test-table`;";
 	//Apply query through the opnened connection
 	$queryResult = mysqli_query($connection, $queryParmeter);
 	//Fetch the resulting columns as an associative array
@@ -24,6 +24,9 @@
 				<div><?php echo htmlspecialchars($value['name']); ?></div>
 				<div><?php echo htmlspecialchars($value['email']); ?></div>
 				<div><?php echo htmlspecialchars($value['phone']); ?></div>
+				<div class="">
+					<img src="images/<?=$value['image-url']?>">
+				</div>
 			</div>
 		<?php endforeach ?>
 	</div>
