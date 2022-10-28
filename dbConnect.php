@@ -12,5 +12,5 @@ $connection = mysqli_connect('localhost', 'testuser', '123', 'testdb');
 if(!$connection){
     echo 'Connection error: '. mysqli_connect_error();
 }
-echo 'DB connect test'
+
 ?>
