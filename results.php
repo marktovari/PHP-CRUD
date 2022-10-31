@@ -24,6 +24,7 @@
 				<div><?php echo htmlspecialchars($value['name']); ?></div>
 				<div><?php echo htmlspecialchars($value['email']); ?></div>
 				<div><?php echo htmlspecialchars($value['phone']); ?></div>
+				<div><?php echo htmlspecialchars($value['comment']); ?></div>
 				<div class="">
 					<img src="images/<?=$value['image-url']?>">
 				</div>

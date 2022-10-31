@@ -5,6 +5,7 @@
 		'name-arrayKey' => '',
 		'email-arrayKey' => '',
 		'phone-arrayKey' => '',
+		'comment-arrayKey' => '',
 	];
 
 
@@ -14,6 +15,7 @@
 	$name = $_POST['name-formData'];
 	$email = $_POST['email-formData'];
 	$phone = $_POST['phone-formData'];
+	$comment = $_POST['comment-formData'];
 
 	$pictureFilename = 		$_FILES['image-formData']['name'];
 	$pictureSize = 			$_FILES['image-formData']['size'];
@@ -64,7 +66,7 @@
 		//First separate the extension from the filename and check if they are really pictures
 		$pictureExtension = pathinfo($pictureFilename, PATHINFO_EXTENSION);
 		$pictureExtension= strtolower($pictureExtension);
-		$acceptedExtensions = ["jpg", "jpeg", "png"];
+		$acceptedExtensions = ["jpg", "jpeg", "png", "gif"];
 
 		if (in_array($pictureExtension, $acceptedExtensions)) {
 			$pictureFilename = uniqid("IMG-", true).'.'.$pictureExtension; //Give it a new name, with the extension it had
@@ -79,16 +81,16 @@
 			$uploadReady = true;
 		} else {
 			$uploadReady = false;
+			echo "Upload failure, error in $key key as it shows $value value";
 			break;
 		}
 	}
 
 //DATABASE UPLOAD
-	$uploadReady = true;
 	if ($uploadReady) {
 		// SQL command to add the data. Note the backticks, and don't mix them up with the single quotations
 		// phpMyAdmin can generate code too
-		$sql = "INSERT INTO `test-table` (`name`, `email`, `phone`, `image-url`) VALUES ('$name', '$email', '$phone', '$pictureFilename');";
+		$sql = "INSERT INTO `test-table` (`name`, `email`, `phone`, `comment`, `image-url`) VALUES ('$name', '$email', '$phone', '$comment', '$pictureFilename');";
 
 		// Apply the SQL Command
 		$sendData = mysqli_query($connection, $sql);
@@ -114,6 +116,10 @@
 		<label>Phone</label>
 		<input type="text" name="phone-formData" value="">
 		<div class="red-text"><?php echo $errors['phone-arrayKey']; ?></div>
+
+		<label>Comment</label>
+		<textarea row name="comment-formData" rows="8" cols="80"></textarea>
+		<div class="red-text"><?php echo $errors['comment-arrayKey']; ?></div>
 		<!-- Image Upload -->
 		<label>Image</label>
 		<input type="file" name="image-formData">
