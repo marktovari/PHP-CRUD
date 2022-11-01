@@ -7,10 +7,12 @@
 
 	//Write Queries in SQL and put it in a string
 	$queryParmeter =  "SELECT * FROM `test-table`;";
-	//Apply query through the opnened connection
-	$queryResult = mysqli_query($connection, $queryParmeter);
+	// Create PDO (PHP Data Object)
+	$pdo = new PDO($dns, $user, $password);
+	//Apply query through the Data Object using the built-in method
+	$stmt = $pdo->query($queryParmeter);
 	//Fetch the resulting columns as an associative array
-	$queryArray = mysqli_fetch_all($queryResult, MYSQLI_ASSOC);
+	$queryArray = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
