@@ -6,10 +6,9 @@
 	require_once(__ROOT__.'\dbConnect.php'); //Delete this and use the line above in actual application
 
 	//Write Queries in SQL and put it in a string
-	$queryParmeter =  "SELECT * FROM `test-table`;";
-	// Create PDO (PHP Data Object)
-	$pdo = new PDO($dns, $user, $password);
-	//Apply query through the Data Object using the built-in method
+	$queryParmeter =  "SELECT * FROM `testtable`";
+
+	//Apply query through the PDO (PHP Data Object) using the built-in method, recording it in a variable
 	$stmt = $pdo->query($queryParmeter);
 	//Fetch the resulting columns as an associative array
 	$queryArray = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -28,7 +27,7 @@
 				<div><?php echo htmlspecialchars($value['phone']); ?></div>
 				<div><?php echo htmlspecialchars($value['comment']); ?></div>
 				<div class="">
-					<img src="images/<?=$value['image-url']?>">
+					<img src="images/<?=$value['imageurl']?>">
 				</div>
 			</div>
 		<?php endforeach ?>

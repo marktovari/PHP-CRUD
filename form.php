@@ -59,7 +59,7 @@
 	//Image Validation
 	if ($pictureError != 0) { //Use the built-in error functionality of the PHP $_FILE global
         $errors["image-arrayKey"] = "Error with picture: {$pictureError}";
-    } else if ($pictureSize > 140000) {
+    } else if ($pictureSize > 1400000) {
 		$errors["image-arrayKey"] = "Image bigger than recommended";
     } else {
 		//If there are no errors begin the uploading of the file itself
@@ -88,12 +88,13 @@
 
 //DATABASE UPLOAD
 	if ($uploadReady) {
-		// SQL command to add the data. Note the backticks, and don't mix them up with the single quotations
-		// phpMyAdmin can generate code too
-		$sql = "INSERT INTO `test-table` (`name`, `email`, `phone`, `comment`, `image-url`) VALUES ('$name', '$email', '$phone', '$comment', '$pictureFilename');";
+		// SQL command to add the data.
+		$sql = 'INSERT INTO testtable(name, email, phone, comment, imageurl) VALUES(:name, :email, :phone, :comment, :imageurl)';
 
-		// Apply the SQL Command
-		$sendData = mysqli_query($connection, $sql);
+		// Apply the SQL Command via a PDO (PHP Data Object)
+		$stmt = $pdo->prepare($sql);
+		// Adding the values to the prepared statement
+		$stmt->execute(['name' => $name, 'email' => $email, 'phone' => $phone, 'comment' => $comment, 'imageurl' => $pictureFilename]);
 	}
 }
 
