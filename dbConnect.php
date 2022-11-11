@@ -19,5 +19,3 @@ $pdo = new PDO($dsn, $user, $password);
 //Change some settings in PDO
 $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ); //like turning the default fetching to return as objective
 $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false); //And enabling prepared statements, to make sure they work even if the database driver doesn't support it
-
-?>

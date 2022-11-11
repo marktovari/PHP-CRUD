@@ -1,5 +1,19 @@
+nav {
+    display: flex;
+    margin: 1rem;
+    justify-content: space-around;
+}
+a {
+    padding: 1;
+    margin: 1;
+    background-color: lightblue;
+    border: black solid 1px;
+    text-decoration: none;
+    color:black;
+}
+
 body {
     margin-left: auto;
     margin-right: auto;
-    width: 10rem;
+    width: 60%;
 }

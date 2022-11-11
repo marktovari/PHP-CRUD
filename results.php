@@ -1,4 +1,5 @@
 <?php
+include('templates/header.php');
 
 	//DB connect
 	define('__ROOT__', dirname(__FILE__));
@@ -6,10 +7,10 @@
 	require_once(__ROOT__.'\dbConnect.php'); //Delete this and use the line above in actual application
 
 	//Write Queries in SQL and put it in a string
-	$queryParmeter =  "SELECT * FROM `testtable`";
+	$sql =  "SELECT * FROM `testtable`";
 
 	//Apply query through the PDO (PHP Data Object) using the built-in method, recording it in a variable
-	$stmt = $pdo->query($queryParmeter);
+	$stmt = $pdo->query($sql);
 	//Fetch the resulting columns as an associative array
 	$queryArray = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -34,3 +35,5 @@
 	</div>
 
 </div>
+
+<?php include('templates/footer.php'); ?>
