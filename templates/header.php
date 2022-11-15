@@ -13,8 +13,4 @@
 				<!-- NAV Member -->
 				<a href="results.php">Results</a>
 	    </div>
-	    <div>
-				<!-- NAV Member -->
-				<a href="login.php">Login</a>
-	    </div>
 	</nav>
