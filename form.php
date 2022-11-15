@@ -1,10 +1,18 @@
 <?php
 include('templates/header.php');
 
-	//DB connect
-	define('__ROOT__', dirname(__FILE__));
-	//define('__ROOT__', dirname(dirname(__FILE__))); This is a file outside of the webroot with sensitive info to keep the info secure,
-	require_once(__ROOT__.'\dbConnect.php'); //Delete this and use the line above in actual application
+	//Log out by ending the session
+	if (isset($_POST['logout'])) {
+		session_unset();
+		session_destroy();
+	}
+
+	//Restrict access to the page
+	if (!isset($_SESSION['pwd'])) {
+		//Redirect to another page if user isn't logged in
+		header('Location:index.php');
+		exit;
+	}
 
 	//Errors Array
 	$errors = [
@@ -107,7 +115,7 @@ include('templates/header.php');
 ?>
 
 <section class="">
-	<form class="" action="index.php" method="POST" enctype="multipart/form-data">
+	<form class="" action="form.php" method="POST" enctype="multipart/form-data">
 
 		<label>Name</label>
 		<!-- We echo out the $uploadData[$key], so when the user clicks the submit button, the data doesn't disappear -->
@@ -134,6 +142,7 @@ include('templates/header.php');
 		<input type="submit" name="submit" value="Submit" class="">
 		<!-- Once this button is pressed, all the $uploadData['arrayKey'] turns into a POST request. Which is an associative array.-->
 		<!-- So it can be accessed via $_POST[$key] with $key being as it was called in the 'name' tag of the input field in the form -->
+		<input type="submit" name="logout" value="Logout">
 		</div>
 	</form>
 </section>

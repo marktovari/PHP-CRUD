@@ -10,5 +10,7 @@ It has far more comments than a professional work would need to navigate through
 - Added image upload that will save the picture in the /images folder, assign a unique name to it, and save it in the DB
 
 ## Iteration 2
-- switched from mysqli to PDO, added "mysqli" branch to preserve previous Iteration
-- added nav links to the header and added header and footer to all the pages so they can be shown individually instead of crowded on the index.php
+- Awitched from mysqli to PDO, added "mysqli" branch to preserve previous Iteration
+- Added nav links to the header and added header and footer to all the pages so they can be shown individually instead of crowded on the index.php
+- Added a login.php page and hid the form.php behind it, so not everyone can upload data to the DB
+- Put the database connection into the header along with starting the session

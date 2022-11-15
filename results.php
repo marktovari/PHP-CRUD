@@ -1,11 +1,6 @@
 <?php
 include('templates/header.php');
 
-	//DB connect
-	define('__ROOT__', dirname(__FILE__));
-	//define('__ROOT__', dirname(dirname(__FILE__))); This is a file outside of the webroot with sensitive info to keep the info secure,
-	require_once(__ROOT__.'\dbConnect.php'); //Delete this and use the line above in actual application
-
 	//Write Queries in SQL and put it in a string
 	$sql =  "SELECT * FROM `testtable`";
 
