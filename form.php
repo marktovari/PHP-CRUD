@@ -30,6 +30,7 @@ include('templates/header.php');
 	$email = $_POST['email-formData'];
 	$phone = $_POST['phone-formData'];
 	$comment = $_POST['comment-formData'];
+	$id = uniqid();
 
 	$pictureFilename = 		$_FILES['image-formData']['name'];
 	$pictureSize = 			$_FILES['image-formData']['size'];
@@ -103,12 +104,12 @@ include('templates/header.php');
 //DATABASE UPLOAD
 	if ($uploadReady) {
 		// SQL command to add the data.
-		$sql = 'INSERT INTO testtable(name, email, phone, comment, imageurl) VALUES(:name, :email, :phone, :comment, :imageurl)';
+		$sql = 'INSERT INTO testtable(postId, name, email, phone, comment, imageurl) VALUES(:id, :name, :email, :phone, :comment, :imageurl)';
 
 		// Apply the SQL Command via a PDO (PHP Data Object)
 		$stmt = $pdo->prepare($sql);
 		// Adding the values to the prepared statement
-		$stmt->execute(['name' => $name, 'email' => $email, 'phone' => $phone, 'comment' => $comment, 'imageurl' => $pictureFilename]);
+		$stmt->execute(['id' => $id, 'name' => $name, 'email' => $email, 'phone' => $phone, 'comment' => $comment, 'imageurl' => $pictureFilename]);
 	}
 }
 
