@@ -26,6 +26,27 @@ include('templates/header.php');
 					<img src="images/<?=$value['imageurl']?>">
 				</div>
 			</div>
+			<?php if ($_SESSION['pwd']): ?>
+				<form class="" action="results.php" method="post">
+					<input type="submit" name="delete" value="DELETE">
+					<?php if(array_key_exists('delete', $_POST)) {
+						/* In each iteration of the results in the foreach array,
+						we output the delete button, so when it is pressed,
+						it deletes the right row from the database */
+							$sql = 'DELETE FROM testtable WHERE postID = '.$value['postID'];
+							$stmt = $pdo->query($sql);
+						}?>
+					<input type="submit" name="edit" value="EDIT">
+					<?php if(array_key_exists('edit', $_POST)) {
+						$_SESSION['name'] = $value['name'];
+						$_SESSION['email'] = $value['email'];
+						$_SESSION['phone'] = $value['phone'];
+						$_SESSION['comment'] = $value['comment'];
+						$_SESSION['subjectID'] = $value['postID'];
+						header('Location: update.php');
+					}?>
+				</form>
+			<?php endif; ?>
 		<?php endforeach ?>
 	</div>
 
