@@ -22,12 +22,16 @@ if (isset($_POST['submit-update'])) {
     $email = $_POST['email'];
     $phone = $_POST['phone'];
     $comment = $_POST['comment'];
-    $id = $_SESSION['subjectID'];
-    $img = $_POST['newImage'];
 
-    //Leave the image unchanged if a new one isn't uploaded
-    if (isset($img)) {
-        
+    $id = $_SESSION['subjectID'];
+    $oldImg = $_SESSION['old-image'];
+
+    $img = $_FILES['newImage']['name'];
+    $tempName = $_FILES['newImage']['tmp_name'];
+
+    if ($img != '') { // Only upload a new pic, if there is one
+            $uploadPath = 'images/'.$oldImg; //Use the same name as in the database
+            move_uploaded_file($tempName, $uploadPath); //Move the file into the upload path
     }
 
     // SQL command to add the data.
@@ -38,10 +42,15 @@ if (isset($_POST['submit-update'])) {
                 `phone` = ?,
                 `comment` = ?
             WHERE 1";
+             /*
+                The image is not uploaded, as the database is not modified
+                Remember that we are reusing the old name.
+                It is also a minor security concern, so beware
+            */
     // Apply the SQL Command via a PDO (PHP Data Object)
     $stmt = $pdo->prepare($sql);
     // Adding the values to the prepared statement
-    $stmt->execute([$name, $email, $phone, $comment]);
+    $stmt->execute([$name, $email, $phone, $comment,]);
     // $stmt->execute(['name' => $name,
     //                 'email' => $email,
     //                 'phone' => $phone,

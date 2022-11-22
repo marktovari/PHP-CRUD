@@ -43,6 +43,7 @@ include('templates/header.php');
 						$_SESSION['phone'] = $value['phone'];
 						$_SESSION['comment'] = $value['comment'];
 						$_SESSION['subjectID'] = $value['postID'];
+						$_SESSION['old-image'] = $value['imageurl'];
 						header('Location: update.php');
 					}?>
 				</form>
